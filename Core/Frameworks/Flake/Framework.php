@@ -219,6 +219,8 @@ class Framework extends \Flake\Core\Framework {
 
 		if(defined("PROJECT_DB_MYSQL") && PROJECT_DB_MYSQL === TRUE) {
 			self::initDbMysql();
+		} elseif (defined("PROJECT_DB_PGSQL") && PROJECT_DB_PGSQL === TRUE) {
+			self::initDbPgsql();
 		} else {
 			self::initDbSqlite();
 		}
@@ -291,6 +293,36 @@ class Framework extends \Flake\Core\Framework {
 		}
 		
 		return TRUE;
+	}
+
+	protected static function initDbPgsql() {
+		if (!defined("PROJECT_DB_PGSQL_HOST")) {
+			die("<h3>The constant PROJECT_DB_PGSQL_HOST, containing the PostgreSQL host name, is not set.<br />You should set it in Specific/config.system.php</h3>");
+		}
+
+		if (!defined("PROJECT_DB_PGSQL_DBNAME")) {
+			die("<h3>The constant PROJECT_DB_PGSQL_DBNAME, containing the PostgreSQL database name, is not set.<br />You should set it in Specific/config.system.php</h3>");
+		}
+
+		if (!defined("PROJECT_DB_PGSQL_USERNAME")) {
+			die("<h3>The constant PROJECT_DB_PGSQL_USERNAME, containing the PostgreSQL database username, is not set.<br />You should set it in Specific/config.system.php</h3>");
+		}
+
+		if (!defined("PROJECT_DB_PGSQL_PASSWORD")) {
+			die("<h3>The constant PROJECT_DB_PGSQL_PASSWORD, containing the PostgreSQL database password, is not set.<br />You should set it in Specific/config.system.php</h3>");
+		}
+
+		try {
+			$GLOBAL["DB"] = new \Flake\Core\Database\Pgsql(
+				PROJECT_DB_PGSQL_HOST,
+				PROJECT_DB_PGSQL_DBNAME,
+				PROJECT_DB_PGSQL_USERNAME,
+				PROJECT_DB_PGSQL_PASSWORD);
+
+			$GLOBALS["DB"]->query("SET NAMES 'UTF8'");
+		} catch(\Exception $e) {
+			die("<h3>Baïkal was not able to establish a connection to the configured PostgreSQL database (as configured in Specific/config.system.php).</h3>");
+		}
 	}
 	
 	public static function isDBInitialized() {

@@ -69,6 +69,26 @@ class System extends \Baikal\Model\Config {
 			"type" => "string",
 			"comment" => "MySQL > Password",
 		),
+		"PROJECT_DB_PGSQL" => array(
+			"type" => "boolean",
+			"comment" => "MySQL > Use MySQL instead of SQLite ?",
+		),
+		"PROJECT_DB_PGSQL_HOST" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Host, including ':portnumber' if port is not the default one (?)",
+		),
+		"PROJECT_DB_PGSQL_DBNAME" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Database name",
+		),
+		"PROJECT_DB_PGSQL_USERNAME" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Username",
+		),
+		"PROJECT_DB_PGSQL_PASSWORD" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Password",
+		),
 		"BAIKAL_ENCRYPTION_KEY" => array(
 			"type" => "string",
 			"comment" => "A random 32 bytes key that will be used to encrypt data",
@@ -155,7 +175,7 @@ class System extends \Baikal\Model\Config {
 		$oMorpho->add(new \Formal\Element\Checkbox(array(
 			"prop" => "PROJECT_DB_MYSQL",
 			"label" => "Use MySQL",
-			"help" => "If checked, Baïkal will use MySQL instead of SQLite.",
+			"help" => "If checked, Baïkal will use MySQL",
 			"refreshonchange" => TRUE,
 		)));
 		
@@ -178,6 +198,34 @@ class System extends \Baikal\Model\Config {
 		$oMorpho->add(new \Formal\Element\Password(array(
 			"prop" => "PROJECT_DB_MYSQL_PASSWORD",
 			"label" => "MySQL password",
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Checkbox(array(
+			"prop" => "PROJECT_DB_PGSQL",
+			"label" => "Use MySQL",
+			"help" => "If checked, Baïkal will use PostgreSQL",
+			"refreshonchange" => TRUE,
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Text(array(
+			"prop" => "PROJECT_DB_PGSQL_HOST",
+			"label" => "MySQL host",
+			"help" => "Host ip or name, including ':portnumber' if port is not the default one (3306)"
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Text(array(
+			"prop" => "PROJECT_DB_PGSQL_DBNAME",
+			"label" => "PostgreSQL database name",
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Text(array(
+			"prop" => "PROJECT_DB_PGSQL_USERNAME",
+			"label" => "PostgreSQL username",
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Password(array(
+			"prop" => "PROJECT_DB_PGSQL_PASSWORD",
+			"label" => "PostgreSQL password",
 		)));
 		
 		return $oMorpho;

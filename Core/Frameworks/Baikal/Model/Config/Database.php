@@ -35,7 +35,7 @@ class Database extends \Baikal\Model\Config {
 		),
 		"PROJECT_DB_MYSQL" => array(
 			"type" => "boolean",
-			"comment" => "MySQL > Use MySQL instead of SQLite ?",
+			"comment" => "MySQL > Use MySQL",
 		),
 		"PROJECT_DB_MYSQL_HOST" => array(
 			"type" => "string",
@@ -53,6 +53,26 @@ class Database extends \Baikal\Model\Config {
 			"type" => "string",
 			"comment" => "MySQL > Password",
 		),
+		"PROJECT_DB_PGSQL" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Use PostgreSQL",
+		),
+		"PROJECT_DB_PGSQL_HOST" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Host, including ':portnumber' if port is not the default one (?)",
+		),
+		"PROJECT_DB_PGSQL_DBNAME" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Database name",
+		),
+		"PROJECT_DB_PGSQL_USERNAME" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Username",
+		),
+		"PROJECT_DB_PGSQL_PASSWORD" => array(
+			"type" => "string",
+			"comment" => "PgSQL > Password",
+		),
 	);
 	
 	# Default values
@@ -63,6 +83,11 @@ class Database extends \Baikal\Model\Config {
 		"PROJECT_DB_MYSQL_DBNAME" => "",
 		"PROJECT_DB_MYSQL_USERNAME" => "",
 		"PROJECT_DB_MYSQL_PASSWORD" => "",
+		"PROJECT_DB_PGSQL" => FALSE,
+		"PROJECT_DB_PGSQL_HOST" => "",
+		"PROJECT_DB_PGSQL_DBNAME" => "",
+		"PROJECT_DB_PGSQL_USERNAME" => "",
+		"PROJECT_DB_PGSQL_PASSWORD" => ""
 	);
 	
 	public function formMorphologyForThisModelInstance() {
@@ -79,7 +104,7 @@ class Database extends \Baikal\Model\Config {
 		$oMorpho->add(new \Formal\Element\Checkbox(array(
 			"prop" => "PROJECT_DB_MYSQL",
 			"label" => "Use MySQL",
-			"help" => "If checked, Baïkal will use MySQL instead of SQLite.",
+			"help" => "If checked, Baïkal will use MySQL",
 			"refreshonchange" => TRUE,
 		)));
 		
@@ -102,6 +127,34 @@ class Database extends \Baikal\Model\Config {
 		$oMorpho->add(new \Formal\Element\Password(array(
 			"prop" => "PROJECT_DB_MYSQL_PASSWORD",
 			"label" => "MySQL password",
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Checkbox(array(
+			"prop" => "PROJECT_DB_PGSQL",
+			"label" => "Use PostgreSQL",
+			"help" => "If checked, Baïkal will use PostgreSQL",
+			"refreshonchange" => TRUE,
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Text(array(
+			"prop" => "PROJECT_DB_PGSQL_HOST",
+			"label" => "PostgreSQL host",
+			"help" => "Host ip or name, including <strong>':portnumber'</strong> if port is not the default one (?)"
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Text(array(
+			"prop" => "PROJECT_DB_PGSQL_DBNAME",
+			"label" => "PostgreSQL database name",
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Text(array(
+			"prop" => "PROJECT_DB_PGSQL_USERNAME",
+			"label" => "PostgreSQL username",
+		)));
+		
+		$oMorpho->add(new \Formal\Element\Password(array(
+			"prop" => "PROJECT_DB_PGSQL_PASSWORD",
+			"label" => "PostgreSQL password",
 		)));
 
 		return $oMorpho;
